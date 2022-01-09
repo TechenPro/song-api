@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+    <title>Song API</title>
+</head>
+<body>
+    <form name="search" onsubmit="searchSongs()">
+        <input type="text" name="search"><br>
+        <input type="radio" id="title" name="search_mode" value="title">
+        <label for="title">Search by song title</label><br>
+        <input type="radio" id="artist" name="search_mode" value="artist">
+        <label for="author">Search by song artist</label><br>
+        <input type="submit" value="Search!">
+    </form>
+</body>
+<script language="JavaScript" type="text/javascript">
+    function searchSongs(){
+        console.log("searching");
+    }
+</script>

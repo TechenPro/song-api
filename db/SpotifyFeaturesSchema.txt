@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS "songs"(
+  "genre" TEXT,
+  "artist_name" TEXT,
+  "track_name" TEXT,
+  "track_id" TEXT,
+  "popularity" INTEGER,
+  "acousticness" REAL,
+  "danceability" REAL,
+  "duration_ms" INTEGER,
+  "energy" REAL,
+  "instrumentalness" REAL,
+  "key" TEXT,
+  "liveness" REAL,
+  "loudness" REAL,
+  "mode" TEXT,
+  "speechiness" REAL,
+  "tempo" REAL,
+  "time_signature" TEXT,
+  "valence" REAL
+);

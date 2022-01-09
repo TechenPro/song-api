@@ -1,0 +1,22 @@
+{
+  "name": "song-api",
+  "version": "1.0.0",
+  "description": "An api to search Spotify Features",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config -w * -w .env src/app.js",
+    "start": "node dotenv/config src/app.js",
+    "postinstall": "copy .env.example .env"
+  },
+  "author": "Turin Briggs",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "sqlite3": "=4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
