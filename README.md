@@ -2,7 +2,7 @@
 
 A demo API to search the songs in the [Spotify Tracks DB](https://www.kaggle.com/zaheenhamidani/ultimate-spotify-tracks-db).
 
-Built using Node + Express with an sqlite3 database. This technology stack was chosen due to the efficiency of setup and the ability to perform robust queries on the data. 
+Built using Node + Express with an sqlite3 database. This technology stack was chosen due to the efficiency of setup and the ability to perform robust queries on the data. This was especially useful for dealing with records that were identical except for the `genre` field.
 
 The .csv was converted to sqlite with [sqlite tools](https://www.sqlitetutorial.net/download-install-sqlite/) and the schema for the converted table can also be found in the db folder.
 
