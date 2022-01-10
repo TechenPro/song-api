@@ -14,7 +14,7 @@ const title_search = db.prepare(`
     SELECT track_name AS title, artist_name AS artist, 
     GROUP_CONCAT(genre, ', ') AS genres, popularity
     FROM songs
-    WHERE track_name LIKE ? ESCAPE '\\'
+    WHERE track_name LIKE ? ESCAPE '@'
     GROUP BY track_id
     LIMIT 500;
 `);
@@ -22,7 +22,7 @@ const artist_search = db.prepare(`
     SELECT track_name AS title, artist_name AS artist, 
     GROUP_CONCAT(genre, ', ') AS genres, popularity
     FROM songs
-    WHERE artist_name LIKE ? ESCAPE '\\'
+    WHERE artist_name LIKE ? ESCAPE '@'
     GROUP BY track_id
     LIMIT 500;
 `);
@@ -35,8 +35,11 @@ const popular_songs = db.prepare(`
     LIMIT ?;
 `);
 const avg_duration = db.prepare(`
-    SELECT AVG(duration_ms) AS duration
-    FROM songs;
+    SELECT AVG(T.duration_ms) AS duration
+    FROM
+        (SELECT DISTINCT track_id, duration_ms
+        FROM songs)
+    AS T;
 `);
 
 /**
@@ -51,10 +54,16 @@ function queryPromise(statement, params){
     });
 };
 
+function closeDb(){
+    console.log("closing database connection...");
+    db.close();
+}
+
 module.exports = {
     queryPromise,
     title_search,
     artist_search,
     popular_songs,
-    avg_duration
+    avg_duration,
+    closeDb
 };

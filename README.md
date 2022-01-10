@@ -7,15 +7,13 @@ Built using Node + Express with an sqlite3 database. This technology stack was c
 The .csv was converted to sqlite with [sqlite tools](https://www.sqlitetutorial.net/download-install-sqlite/) and the schema for the converted table can also be found in the db folder.
 
 ---
-## Usage
-
----
 ## Running
 
 To run the API locally, you will need the latest version of NodeJS. Clone the repo and open the directory in your commandline. From there, run the commands<sup>[1](#footnote1)</sup>:
 
     npm install
     npm start
+
 This will start the server running at [localhost:3000](localhost:3000)
 
 If you would like to use vscode's debugger, create a `launch.json` and add a configuration for `NodeJs: launch via npm`. Then set the runtime_arg after `run-script` to `dev`.

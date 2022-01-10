@@ -1,28 +1,27 @@
 const express = require("express");
 const db = require("../db");
 const router = express.Router();
-const space_re = new RegExp("^ +");
+
+// Patterns for input validation
+const space_re = new RegExp("^ +$");
 
 // Parse paramters out to reate search mode and key
 function parseSearchKey(params) {
     let key = params?.key;
-
+    
     // Make sure non-empty key exists
     if (!key || space_re.test(key)) {
         throw { "name": "empty" }
     }
     // Validate type
-    if (typeof (key) != String) {
-        try {
-            key = String(key);
-        } catch {
-            throw { "name": "invalid" }
-        }
+    if (typeof (key) != "string") {
+        throw { "name": "invalid" }
     }
+    
     // Escape wildcard and escape characters
-    key = key.replace("\\", "\\\\");
-    key = key.replace("%", "\\%");
-    key = key.replace("_", "\\_");
+    key = key.replace(/@/g, "@@");
+    key = key.replace(/%/g, "@%");
+    key = key.replace(/_/, "@_");
 
     // Add wildcards to allow non-exact searches
     // Look into FTS solution
@@ -50,7 +49,7 @@ router.get("/songs/search", async (req, res) => {
             return;
         }
         else if (e.name == "invalid") {
-            res.status(422).send({ "msg": "Invalid search key type. Key should be a String." });
+            res.status(422).send({ "msg": "Invalid search key type. Key should be a String."});
             return;
         }
         else {
