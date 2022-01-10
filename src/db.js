@@ -11,31 +11,31 @@ const db = new sqlite.Database(db_path, sqlite.OPEN_READONLY);
 // Prepare query statements
 // TODO: Implement pagination for search results
 const title_search = db.prepare(`
-    SELECT track_name, artist_name, 
-    GROUP_CONCAT(genre, ', '), popularity
+    SELECT track_name AS title, artist_name AS artist, 
+    GROUP_CONCAT(genre, ', ') AS genres, popularity
     FROM songs
     WHERE track_name LIKE ? ESCAPE '\\'
     GROUP BY track_id
-    LIMIT 100;
+    LIMIT 500;
 `);
 const artist_search = db.prepare(`
-    SELECT track_name, artist_name, 
-    GROUP_CONCAT(genre, ', '), popularity
+    SELECT track_name AS title, artist_name AS artist, 
+    GROUP_CONCAT(genre, ', ') AS genres, popularity
     FROM songs
     WHERE artist_name LIKE ? ESCAPE '\\'
     GROUP BY track_id
-    LIMIT 100;
+    LIMIT 500;
 `);
 const popular_songs = db.prepare(`
-    SELECT track_name, artist_name,
-    GROUP_CONCAT(genre, ', '), popularity
+    SELECT track_name AS title, artist_name AS artist,
+    GROUP_CONCAT(genre, ', ') AS genres, popularity
     FROM songs
     GROUP BY track_id
     ORDER BY popularity DESC
     LIMIT ?;
 `);
 const avg_duration = db.prepare(`
-    SELECT AVG(duration_ms)
+    SELECT AVG(duration_ms) AS duration
     FROM songs;
 `);
 
