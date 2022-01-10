@@ -89,7 +89,7 @@ router.get("/songs/popular", async (req, res) => {
 
     // Attempt to parse a valid, positive integer from the url parameter
     try {
-        if (!isNaN(req.query?.count)) {
+        if (req.query?.count && !isNaN(req.query?.count)) {
             count = parseInt(req.query.count);
         }
     } catch (e) {

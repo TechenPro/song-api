@@ -3,17 +3,83 @@
     <title>Song API</title>
 </head>
 <body>
-    <form name="search" onsubmit="searchSongs()">
-        <input type="text" name="search"><br>
-        <input type="radio" id="title" name="search_mode" value="title">
+
+    <div>
+        <input type="text" name="search_key"><br>
+        <input type="radio" id="title" name="search_mode" value="title" checked="checked">
         <label for="title">Search by song title</label><br>
         <input type="radio" id="artist" name="search_mode" value="artist">
         <label for="author">Search by song artist</label><br>
-        <input type="submit" value="Search!">
-    </form>
+        <input type="button" onclick="searchSongs(); return false" value="Search!"><br>
+        <textarea id="search-results" placeholder="Search results..."></textarea>
+    </div>
+    <hr>
+    <div>
+        <label>Get the most popular songs</label><br>
+        <input type="text" name="count">
+        <input type="button" onclick="popularSongs(); return false" value="Get!"><br>
+        <textarea id="popular-songs" placeholder="Popular songs..."></textarea>
+    </div>
+    <hr>
+    <div>
+        <input type="button" onclick="getAvgDuration(); return false" value="Get Average Song Duration"><br>
+        <textarea id="avg"></textarea>
+    </div>
+
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript">
     function searchSongs(){
-        console.log("searching");
+        var key = $("input[name=search_key").val();
+        var mode = $("input[name=search_mode]").val();
+        var url = "/songs/search?";
+
+        if(!key) {
+            $("#search-results").val("Enter a search key");
+            return;
+        }
+        url = url + "key=" + encodeURIComponent(key);
+
+        if(mode){
+            url = url + "&mode=" + encodeURIComponent(mode);
+        }
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: Object,
+
+            success: function(data) {
+                var res = JSON.stringify(data.results);
+                $("#search-results").val(res);
+            }
+        });
+    };
+
+    function popularSongs(){
+        var url = "/songs/popular?count=" + encodeURIComponent($("input[name=count]").val());
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: Object,
+
+            success: function(data) {
+                var res = JSON.stringify(data.results);
+                $("#popular-songs").val(res);
+            }
+        });
+    };
+
+    function getAvgDuration() {
+        $.ajax({
+            url: "/songs/duration/avg",
+            type: "GET",
+            data: Object,
+
+            success: function(data) {
+                var res = JSON.stringify(data.results);
+                $("#avg").val(res);
+            }
+        })
     }
+
 </script>
